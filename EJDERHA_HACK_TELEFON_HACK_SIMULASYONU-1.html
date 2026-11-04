@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#07110b">
+<title>EJDERHA HACK</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#07110b;color:#eaffef;font:15px Arial,sans-serif}header{padding:18px;background:#0c1c12;border-bottom:1px solid #28563a}h1{margin:0;color:#65ff98;font-size:22px}header small,.hint,footer{color:#a6c5b0}main{max-width:760px;margin:auto;padding:14px}.hero,.panel,.tile{background:#102117;border:1px solid #28563a;border-radius:13px;padding:14px;margin-bottom:12px}.stats{display:flex;gap:10px}.stat{flex:1;min-width:0;background:#07150c;padding:12px;border-radius:9px}.stat b{display:block;color:#65ff98;font-size:18px;overflow-wrap:anywhere}.stat span{font-size:11px;color:#a6c5b0}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.tile{min-height:82px;text-align:left;color:#fff;font-weight:bold;font-size:14px;cursor:pointer}.tile small{display:block;color:#a6c5b0;font-weight:normal;margin-top:7px}.panel{display:none}.panel.active{display:block}.panel h3{margin:0 0 12px;color:#65ff98}button{font:inherit}button.action{background:#19532e;color:white;border:1px solid #55d982;border-radius:8px;padding:12px;margin:8px 5px 0 0;font-weight:bold;cursor:pointer}.tile:active,button:active{opacity:.75}input,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #39704c;background:#061009;color:white;margin:7px 0;font-size:16px}textarea{min-height:90px}.out{white-space:pre-wrap;overflow-wrap:anywhere;background:#050b07;border:1px solid #28563a;border-radius:8px;padding:12px;margin-top:10px;line-height:1.5;min-height:44px}.hint{font-size:12px;line-height:1.5}.terminal{height:170px;overflow:auto;font-family:monospace;color:#83ffab}footer{text-align:center;padding:20px;font-size:12px}.profile-head{display:flex;align-items:center;gap:12px;margin-top:12px;padding:10px;background:#07150c;border:1px solid #28563a;border-radius:10px}.profile-avatar{width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:#173b25;border:1px solid #65ff98;font-size:25px;overflow:hidden;flex:0 0 46px}.profile-avatar img{width:100%;height:100%;object-fit:cover}.profile-preview{width:92px;height:92px;border-radius:50%;object-fit:cover;border:2px solid #65ff98;background:#07150c;display:none;margin:8px 0}.profile-head strong{display:block;color:#8dffad}.profile-head small{color:#a6c5b0}.avatar-options{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}.avatar-choice{background:#07150c;border:1px solid #39704c;border-radius:8px;padding:8px;font-size:23px;cursor:pointer}.avatar-choice.selected{border:2px solid #65ff98;box-shadow:0 0 10px #65ff9855}.warning{background:#39250a;border:1px solid #9b7028;color:#ffe6ad;border-radius:9px;padding:10px;margin:12px 0}noscript{display:block;background:#5b1717;color:white;padding:12px;margin:12px;border-radius:8px}
+#fpsMeter{position:fixed;top:8px;left:8px;z-index:99999;background:rgba(0,0,0,.88);color:#65ff98;border:1px solid #55d982;border-radius:8px;padding:7px 10px;font: bold 13px Arial,sans-serif;box-shadow:0 2px 10px #0008;pointer-events:none}#fpsMeter span{color:#eaffef}
+
+/* EJDERHA giriş animasyonu */
+#introScreen{position:fixed;inset:0;z-index:100000;background:radial-gradient(circle at 50% 42%,#173b25 0%,#07110b 48%,#020604 100%);display:flex;align-items:center;justify-content:center;overflow:hidden;opacity:1;visibility:visible;transition:opacity .8s ease,visibility .8s ease}
+#introScreen.hide{opacity:0;visibility:hidden;pointer-events:none}
+/* Ek giriş efektleri: parçacıklar, tarama çizgisi, ışık huzmeleri ve yazı animasyonu */
+.intro-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient( to bottom, transparent 0 5px, rgba(101,255,152,.045) 6px 7px);mix-blend-mode:screen;animation:scanPass 5s linear infinite}
+.intro-beam{position:absolute;width:160vw;height:2px;left:-30vw;top:18%;background:linear-gradient(90deg,transparent,#65ff98,transparent);box-shadow:0 0 18px #65ff98;transform:rotate(-18deg);animation:beamSweep 3.8s ease-in-out infinite;opacity:.7}
+.intro-orbit{position:absolute;width:min(78vw,360px);height:min(78vw,360px);border:1px dashed #65ff9855;border-radius:50%;animation:orbitSpin 12s linear infinite}
+.intro-orbit:before,.intro-orbit:after{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#aaffc0;box-shadow:0 0 14px 4px #65ff98;top:12%;left:15%}
+.intro-orbit:after{top:auto;left:auto;right:12%;bottom:18%;width:5px;height:5px}
+.intro-particles{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,#9dffb8 1px,transparent 2px),radial-gradient(circle,#65ff98 1px,transparent 2px),radial-gradient(circle,#d8ffe2 1px,transparent 2px);background-size:97px 113px,151px 173px,211px 197px;background-position:0 0,40px 70px,90px 20px;animation:particleDrift 9s linear infinite;opacity:.55}
+.intro-flash{position:absolute;inset:0;pointer-events:none;background:#caffd5;opacity:0;animation:softFlash 4.5s ease-in-out infinite}
+.intro-content{position:relative;text-align:center;padding:28px;animation:introRise 1s cubic-bezier(.2,.8,.2,1) both}
+.intro-emblem{width:116px;height:116px;margin:0 auto 22px;border:2px solid #65ff98;border-radius:50%;display:grid;place-items:center;box-shadow:0 0 18px #35ff7966,inset 0 0 22px #35ff7933;position:relative;animation:emblemPulse 1.5s ease-in-out infinite}
+.intro-emblem:before,.intro-emblem:after{content:"";position:absolute;inset:-12px;border:1px solid #65ff9866;border-radius:50%;animation:ringExpand 2s ease-out infinite}
+.intro-emblem:after{animation-delay:1s}
+.intro-dragon{font-size:55px;filter:drop-shadow(0 0 12px #65ff98);animation:dragonFloat 2.4s ease-in-out infinite}
+.intro-title{margin:0;color:#8dffad;font-size:clamp(27px,8vw,42px);letter-spacing:4px;text-shadow:0 0 18px #39ff79;animation:titleGlow 1.5s ease-in-out infinite alternate}
+.intro-sub{color:#b9d9c2;font-size:11px;letter-spacing:3px;margin-top:10px;animation:subReveal 1.6s .4s both}
+.intro-line{height:3px;width:min(250px,70vw);background:#1b3926;margin:25px auto 12px;overflow:hidden;border-radius:5px}
+.intro-line:after{content:"";display:block;height:100%;width:35%;background:#65ff98;box-shadow:0 0 12px #65ff98;animation:loadingSweep 1.7s ease-in-out infinite}
+.intro-status{font:11px monospace;color:#65ff98;letter-spacing:2px}
+.intro-skip{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);border:1px solid #477b56;background:#0b1b10;color:#dfffe8;border-radius:20px;padding:9px 17px;font-size:12px}
+.intro-grid{position:absolute;inset:0;background-image:linear-gradient(#65ff980c 1px,transparent 1px),linear-gradient(90deg,#65ff980c 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(transparent,#000,transparent);animation:gridDrift 8s linear infinite}
+@keyframes introRise{from{opacity:0;transform:translateY(24px) scale(.94)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes emblemPulse{50%{transform:scale(1.06);box-shadow:0 0 30px #35ff79aa,inset 0 0 28px #35ff7955}}
+@keyframes ringExpand{0%{transform:scale(.82);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+@keyframes titleGlow{to{text-shadow:0 0 28px #39ff79,0 0 45px #39ff7955}}
+@keyframes loadingSweep{0%{transform:translateX(-110%)}100%{transform:translateX(300%)}}
+@keyframes gridDrift{to{background-position:34px 34px}}
+@keyframes scanPass{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+@keyframes beamSweep{0%,100%{top:12%;opacity:0}35%,65%{top:78%;opacity:.8}}
+@keyframes orbitSpin{to{transform:rotate(360deg)}}
+@keyframes particleDrift{to{background-position:0 -220px,40px -300px,90px -260px}}
+@keyframes softFlash{0%,42%,46%,100%{opacity:0}44%{opacity:.08}}
+@keyframes dragonFloat{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-7px) scale(1.08)}}
+@keyframes subReveal{from{opacity:0;letter-spacing:10px}to{opacity:1;letter-spacing:3px}}
+@media(prefers-reduced-motion:reduce){#introScreen *{animation:none!important}}
+
+/* Giriş sonrası mesajlı karşılama */
+#welcomeMessage{position:fixed;inset:0;z-index:100001;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,5,2,.88);backdrop-filter:blur(8px)}
+#welcomeMessage.show{display:flex;animation:welcomeFade .55s ease both}
+.welcome-card{width:min(100%,440px);text-align:center;padding:30px 22px;border:1px solid #65ff98;border-radius:22px;background:linear-gradient(145deg,#142f1e,#061009);box-shadow:0 0 35px #39ff7955,inset 0 0 25px #39ff7918;animation:welcomePop .7s cubic-bezier(.2,.9,.2,1) both}
+.welcome-icon{font-size:54px;filter:drop-shadow(0 0 14px #65ff98);animation:dragonFloat 2s ease-in-out infinite}
+.welcome-card h2{font-size:clamp(25px,7vw,34px);letter-spacing:2px;color:#8dffad;text-shadow:0 0 18px #39ff79;margin:12px 0}
+.welcome-card p{color:#d5f5de;line-height:1.7;margin:10px 0 20px}
+.welcome-card .action{min-width:180px}
+@keyframes welcomeFade{from{opacity:0}to{opacity:1}}
+@keyframes welcomePop{from{opacity:0;transform:translateY(25px) scale(.92)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Şaka amaçlı telefon hack simülasyonu */
+#fakeHackScreen{display:none;position:fixed;inset:0;z-index:99999;background:#020704;color:#7cff9b;overflow:hidden;font-family:monospace;text-align:center;padding:22px;}
+#fakeHackScreen.active{display:flex;align-items:center;justify-content:center;}
+#fakeMatrix{position:absolute;inset:0;width:100%;height:100%;opacity:.48;}
+.fake-hack-card{position:relative;z-index:2;width:min(560px,96vw);padding:26px 18px;background:rgba(0,12,5,.88);border:1px solid #35ff76;border-radius:16px;box-shadow:0 0 30px #00ff6655;}
+.fake-hack-title{font-size:clamp(30px,8vw,54px);font-weight:900;color:#ff4545;text-shadow:0 0 12px #ff0000;animation:fakePulse 1s infinite alternate;margin:12px 0;}
+.fake-hack-sub{color:#b9ffd0;line-height:1.6}.fake-count{font-size:clamp(34px,10vw,58px);font-weight:bold;color:#72ff9c;margin:18px 0;text-shadow:0 0 15px #00ff66;}
+.fake-progress{height:9px;background:#173322;border-radius:20px;overflow:hidden;margin:12px 0 20px}.fake-progress span{display:block;height:100%;width:100%;background:#39ff75;transition:width 1s linear}
+#fakeHackClose{display:none;margin-top:16px;background:#28a957;color:#001b09;border:0;border-radius:9px;padding:13px 24px;font-weight:bold;font-size:16px;cursor:pointer}
+@keyframes fakePulse{from{opacity:.72;transform:scale(.99)}to{opacity:1;transform:scale(1.02)}}
+
+</style>
+</head>
+<body>
+<div id="introScreen" aria-label="EJDERHA HACK açılış ekranı">
+  <div class="intro-grid"></div>
+  <div class="intro-particles"></div>
+  <div class="intro-orbit"></div>
+  <div class="intro-beam"></div>
+  <div class="intro-scan"></div>
+  <div class="intro-flash"></div>
+  <div class="intro-content">
+    <div class="intro-emblem"><div class="intro-dragon">🐉</div></div>
+    <h1 class="intro-title">EJDERHA HACK</h1>
+    <div class="intro-sub">SİBER KONTROL MERKEZİ</div>
+    <div class="intro-line"></div>
+    <div class="intro-status">SİSTEM BAŞLATILIYOR...</div>
+    <div class="intro-sub" style="margin-top:14px;font-size:9px;opacity:.75">GÜÇ • HIZ • GÜVENLİK</div>
+  </div>
+  <button class="intro-skip" type="button" onclick="skipIntro()">GEÇ</button>
+</div>
+<div id="welcomeMessage" role="dialog" aria-modal="true" aria-labelledby="welcomeTitle"><div class="welcome-card"><div class="welcome-icon">🐉</div><h2 id="welcomeTitle">HOŞ GELDİN!</h2><p><strong>EJDERHA HACK</strong> kontrol merkezine hoş geldin.<br>Yeni keşiflere, hızlı araçlara ve güvenli bir deneyime hazırsın.<br><span style="color:#8dffad">Gücün aklında, kontrol sende.</span></p><button class="action" type="button" onclick="closeWelcome()">BAŞLAYALIM</button></div></div>
+<div id="fpsMeter">FPS: <span id="fpsValue">--</span></div>
+<header><h1>🐉 EJDERHA HACK</h1><small>TÜRKÇE SİBER GÜVENLİK PANELİ</small><div class="profile-head"><div class="profile-avatar" id="headerAvatar">🐉</div><div><strong id="headerName">Misafir</strong><small id="headerTag">Profil oluşturulmadı</small></div></div></header>
+<noscript>JavaScript kapalı. Saat ve butonlar çalışmaz. Android WebView ayarlarında JavaScript'i açmalısın.</noscript>
+<main>
+<section class="hero"><h2>Kontrol merkezi</h2><div class="stats"><div class="stat"><b id="clock">Saat hazırlanıyor…</b><span>SAAT</span></div><div class="stat"><b id="internet">Kontrol ediliyor…</b><span>İNTERNET</span></div></div><div id="jsStatus" class="hint">Sayfa başlatılıyor…</div><div class="hint">Giriş tamamlandığında özel karşılama mesajı görüntülenir.</div></section>
+<div id="homeGrid" class="grid">
+<button class="tile" onclick="openPanel('network')">📶 Ağ durumu<small>Bağlantı bilgileri</small></button>
+<button class="tile" onclick="openPanel('terminal')">⌨️ Komut ekranı<small>Yerel yardımcı komutlar</small></button>
+<button class="tile" onclick="openPanel('scan')">🔎 Sistem kontrolü<small>Temel cihaz bilgileri</small></button>
+<button class="tile" onclick="openPanel('ip')">🌐 IP kontrolü<small>IPv4 biçim doğrulama</small></button>
+<button class="tile" onclick="openPanel('dns')">🔗 DNS sorgusu<small>Alan adı A kaydı</small></button>
+<button class="tile" onclick="openPanel('hash')">#️⃣ SHA-256<small>Metin özeti</small></button>
+<button class="tile" onclick="openPanel('security')">🛡️ Güvenlik<small>Tarayıcı kontrolleri</small></button>
+<button class="tile" onclick="openPanel('device')">📱 Cihaz bilgisi<small>Ekran ve tarayıcı</small></button>
+<button class="tile" onclick="openPanel('profile')">👤 Kişi profili<small>İsim ve profil oluştur</small></button>
+<button class="tile" onclick="startFakeHack()">📱 Telefon hack (şaka)<small>Matrix efektli 5 dakikalık demo</small></button>
+</div>
+<section id="network" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>AĞ DURUMU</h3><div class="out" id="networkOut">Hazır.</div><button class="action" onclick="networkInfo()">YENİLE</button><p class="hint">Web sayfası bağlı Wi-Fi adını ve kayıtlı Wi-Fi şifresini okuyamaz.</p></section>
+<section id="terminal" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>KOMUT EKRANI</h3><div class="out terminal" id="term">EJDERHA HACK hazır.\nKomutlar: yardım, saat, tarih, durum, cihaz, temizle</div><input id="cmd" placeholder="Komut yaz" onkeydown="if(event.key==='Enter')runCommand()"><button class="action" onclick="runCommand()">ÇALIŞTIR</button><p class="hint">Komutlar yalnızca bu sayfa içinde çalışır.</p></section>
+<section id="scan" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>SİSTEM KONTROLÜ</h3><div class="out" id="scanOut">Kontrol için butona bas.</div><button class="action" onclick="scanDevice()">KONTROLÜ BAŞLAT</button></section>
+<section id="ip" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>IP BİÇİM KONTROLÜ</h3><input id="ipInput" placeholder="Örn. 192.168.1.1"><button class="action" onclick="checkIP()">KONTROL ET</button><div class="out" id="ipOut">Sonuç burada görünür.</div></section>
+<section id="dns" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>DNS SORGUSU</h3><input id="dnsInput" placeholder="ornek.com"><button class="action" onclick="lookupDNS()">DNS SORGULA</button><div class="out" id="dnsOut">Sonuç burada görünür.</div></section>
+<section id="hash" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>SHA-256 HESAPLAYICI</h3><textarea id="hashInput" placeholder="Metin yaz"></textarea><button class="action" onclick="makeHash()">HESAPLA</button><div class="out" id="hashOut">Sonuç burada görünür.</div></section>
+<section id="security" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>GÜVENLİK KONTROLÜ</h3><div class="out" id="securityOut"></div><button class="action" onclick="securityInfo()">YENİLE</button></section>
+<section id="device" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>CİHAZ BİLGİSİ</h3><div class="out" id="deviceOut"></div><button class="action" onclick="deviceInfo()">YENİLE</button></section>
+<section id="profile" class="panel"><button class="action" onclick="goHome()">← Ana ekran</button><h3>👤 KİŞİ PROFİLİ OLUŞTUR</h3><p class="hint">Bir görünen isim ve simge seç. Bilgiler yalnızca bu tarayıcıda saklanır.</p><label for="profileName">Görünen isim</label><input id="profileName" maxlength="24" placeholder="İsmini yaz"><label>Galeriden profil fotoğrafı</label><input id="profilePhoto" type="file" accept="image/*" onchange="chooseProfilePhoto(event)"><img id="profilePreview" class="profile-preview" alt="Profil fotoğrafı önizlemesi"><button class="action" type="button" onclick="removeProfilePhoto()">FOTOĞRAFI KALDIR</button><p class="hint">İstersen galeriden fotoğraf seçebilir, istersen aşağıdaki simgelerden birini kullanabilirsin.</p><label>Profil simgesi</label><div class="avatar-options" id="avatarOptions"><button type="button" class="avatar-choice selected" data-avatar="🐉" onclick="chooseAvatar(this)">🐉</button><button type="button" class="avatar-choice" data-avatar="🦊" onclick="chooseAvatar(this)">🦊</button><button type="button" class="avatar-choice" data-avatar="🐺" onclick="chooseAvatar(this)">🐺</button><button type="button" class="avatar-choice" data-avatar="🦁" onclick="chooseAvatar(this)">🦁</button><button type="button" class="avatar-choice" data-avatar="⚡" onclick="chooseAvatar(this)">⚡</button><button type="button" class="avatar-choice" data-avatar="👤" onclick="chooseAvatar(this)">👤</button></div><label for="profileTag">Kısa açıklama (isteğe bağlı)</label><input id="profileTag" maxlength="40" placeholder="Örn. EJDERHA üyesi"><button class="action" onclick="saveProfile()">PROFİLİ KAYDET</button><button class="action" onclick="clearProfile()">PROFİLİ SİL</button><div class="out" id="profileOut">Henüz profil oluşturulmadı.</div></section>
+
+<div id="fakeHackScreen" role="dialog" aria-modal="true" aria-label="Şaka amaçlı hack simülasyonu">
+  <canvas id="fakeMatrix"></canvas>
+  <div class="fake-hack-card">
+    <div style="font-size:34px">☠️ 📱 ☠️</div>
+    <div class="fake-hack-title">HACKLENDİNİZ!</div>
+    <div class="fake-hack-sub">EJDERHA HACK • MATRIX SİMÜLASYONU<br><strong>ŞAKA DEMOSU — GERÇEK HACKLEME YOK</strong><br>Bu ekran yalnızca görsel bir efekttir. Telefonunuza erişilmez ve hiçbir veri alınmaz.</div>
+    <div class="fake-count" id="fakeCountdown">05:00</div>
+    <div class="fake-progress"><span id="fakeProgress"></span></div>
+    <div class="fake-hack-sub" id="fakeHackStatus">Simülasyon başladı. Geri sayım tamamlanınca kapatma düğmesi görünecek.</div>
+    <button id="fakeHackClose" type="button" onclick="stopFakeHack()">KAPAT</button>
+  </div>
+</div>
+
+</main><footer>EJDERHA HACK • TÜRKÇE SÜRÜM</footer>
+<script>
+function el(id){return document.getElementById(id)}
+var selectedAvatar='🐉';
+var selectedPhoto='';
+function chooseProfilePhoto(event){var file=event.target.files&&event.target.files[0];if(!file)return;if(!file.type||file.type.indexOf('image/')!==0){put('profileOut','Lütfen bir resim dosyası seç.');return}if(file.size>12*1024*1024){put('profileOut','Fotoğraf en fazla 12 MB olabilir.');event.target.value='';return}var reader=new FileReader();reader.onload=function(){var img=new Image();img.onload=function(){var max=512,scale=Math.min(1,max/Math.max(img.width,img.height));var canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(img.width*scale));canvas.height=Math.max(1,Math.round(img.height*scale));var ctx=canvas.getContext('2d');ctx.drawImage(img,0,0,canvas.width,canvas.height);selectedPhoto=canvas.toDataURL('image/jpeg',0.82);var preview=el('profilePreview');preview.src=selectedPhoto;preview.style.display='block';var opts=el('avatarOptions');if(opts)opts.style.opacity='.45';put('profileOut','Fotoğraf seçildi. Kaydetmek için PROFİLİ KAYDET düğmesine bas.')} ;img.onerror=function(){put('profileOut','Fotoğraf açılamadı. Başka bir resim dene.');};img.src=reader.result;};reader.onerror=function(){put('profileOut','Fotoğraf okunamadı.');};reader.readAsDataURL(file)}
+function removeProfilePhoto(){selectedPhoto='';var f=el('profilePhoto');if(f)f.value='';var preview=el('profilePreview');if(preview){preview.removeAttribute('src');preview.style.display='none'}var opts=el('avatarOptions');if(opts)opts.style.opacity='1';put('profileOut','Fotoğraf kaldırıldı. Simge seçebilirsin.');}
+function chooseAvatar(btn){selectedAvatar=btn.getAttribute('data-avatar')||'🐉';var all=document.querySelectorAll('.avatar-choice');for(var i=0;i<all.length;i++)all[i].classList.toggle('selected',all[i]===btn)}
+function saveProfile(){var name=el('profileName').value.trim();var tag=el('profileTag').value.trim();if(!name){put('profileOut','Lütfen görünen bir isim yaz.');return}var profile={name:name,tag:tag,avatar:selectedAvatar,photo:selectedPhoto};try{localStorage.setItem('ejderhaHackProfile',JSON.stringify(profile));put('profileOut','Profil kaydedildi.');}catch(e){window.ejderhaProfile=profile;put('profileOut','Profil bu oturum için kaydedildi. Tarayıcı kalıcı kayıt izni vermedi.')}renderProfile(profile)}
+function setProfileAvatar(target,profile){if(!target)return;target.textContent='';if(profile&&profile.photo){var image=document.createElement('img');image.alt='Profil fotoğrafı';image.src=profile.photo;target.appendChild(image)}else target.textContent=(profile&&profile.avatar)||'🐉'}
+function renderProfile(profile){if(!profile){put('headerName','Misafir');put('headerTag','Profil oluşturulmadı');setProfileAvatar(el('headerAvatar'),null);selectedPhoto='';return}put('headerName',profile.name);put('headerTag',profile.tag||'EJDERHA üyesi');setProfileAvatar(el('headerAvatar'),profile);selectedPhoto=profile.photo||'';if(el('profilePreview')){if(selectedPhoto){el('profilePreview').src=selectedPhoto;el('profilePreview').style.display='block'}else{el('profilePreview').removeAttribute('src');el('profilePreview').style.display='none'}}if(el('profileName'))el('profileName').value=profile.name||'';if(el('profileTag'))el('profileTag').value=profile.tag||'';selectedAvatar=profile.avatar||'🐉';var opts=el('avatarOptions');if(opts)opts.style.opacity=selectedPhoto?'.45':'1';var all=document.querySelectorAll('.avatar-choice');for(var i=0;i<all.length;i++)all[i].classList.toggle('selected',all[i].getAttribute('data-avatar')===selectedAvatar);put('profileOut','Aktif profil: '+profile.name+'\nAçıklama: '+(profile.tag||'Belirtilmedi'))}
+function loadProfile(){try{var raw=localStorage.getItem('ejderhaHackProfile');if(raw){renderProfile(JSON.parse(raw));return}}catch(e){}if(window.ejderhaProfile)renderProfile(window.ejderhaProfile)}
+function clearProfile(){try{localStorage.removeItem('ejderhaHackProfile')}catch(e){}window.ejderhaProfile=null;el('profileName').value='';el('profileTag').value='';selectedAvatar='🐉';removeProfilePhoto();var all=document.querySelectorAll('.avatar-choice');for(var i=0;i<all.length;i++)all[i].classList.toggle('selected',i===0);renderProfile(null);put('profileOut','Profil silindi.')} 
+function put(id,value){var e=el(id);if(e)e.textContent=value}
+function updateClock(){var d=new Date();put('clock',d.toLocaleTimeString('tr-TR'));put('internet',navigator.onLine?'BAĞLI':'BAĞLI DEĞİL')}
+function openPanel(id){var panels=document.querySelectorAll('.panel');for(var i=0;i<panels.length;i++)panels[i].classList.remove('active');el('homeGrid').style.display='none';el(id).classList.add('active');if(id==='network')networkInfo();if(id==='device')deviceInfo();if(id==='security')securityInfo();if(id==='profile')loadProfile()}
+function goHome(){var panels=document.querySelectorAll('.panel');for(var i=0;i<panels.length;i++)panels[i].classList.remove('active');el('homeGrid').style.display='grid'}
+function networkInfo(){put('networkOut','İnternet: '+(navigator.onLine?'Bağlı':'Bağlı değil')+'\nDil: '+(navigator.language||'Bilinmiyor')+'\nWi-Fi adı: Web sayfasından okunamaz\nWi-Fi şifresi: Okunamaz')}
+function runCommand(){var field=el('cmd'),c=field.value.trim().toLocaleLowerCase('tr-TR'),a='Bilinmeyen komut. yardım yaz.';if(c==='yardım')a='Komutlar: yardım, saat, tarih, durum, cihaz, temizle';else if(c==='saat')a=new Date().toLocaleTimeString('tr-TR');else if(c==='tarih')a=new Date().toLocaleDateString('tr-TR');else if(c==='durum')a=navigator.onLine?'İnternet bağlı.':'İnternet bağlı değil.';else if(c==='cihaz')a=navigator.userAgent;var t=el('term');if(c==='temizle')t.textContent='Ekran temizlendi.';else t.textContent+='\n> '+c+'\n'+a;field.value='';t.scrollTop=t.scrollHeight}
+function scanDevice(){put('scanOut','Kontrol tamamlandı.\nİnternet: '+(navigator.onLine?'Bağlı':'Bağlı değil')+'\nEkran: '+screen.width+' x '+screen.height+'\nDil: '+(navigator.language||'Bilinmiyor'))}
+function checkIP(){var v=el('ipInput').value.trim(),a=v.split('.'),ok=a.length===4;for(var i=0;i<a.length&&ok;i++)if(!/^\d{1,3}$/.test(a[i])||Number(a[i])>255)ok=false;put('ipOut',ok?'IPv4 biçimi geçerli: '+v:'Geçerli bir IPv4 adresi gir.')}
+function lookupDNS(){var host=el('dnsInput').value.trim().replace(/^https?:\/\//,'').split('/')[0];if(!host){put('dnsOut','Önce alan adı gir.');return}put('dnsOut','Sorgulanıyor…');var x=new XMLHttpRequest();x.open('GET','https://dns.google/resolve?name='+encodeURIComponent(host)+'&type=A',true);x.onload=function(){try{var data=JSON.parse(x.responseText),ans=data.Answer||[],out=[];for(var i=0;i<ans.length;i++)out.push(ans[i].data);put('dnsOut','Alan adı: '+host+'\n'+(out.length?out.join('\n'):'A kaydı bulunamadı.'))}catch(e){put('dnsOut','Yanıt okunamadı.')}};x.onerror=function(){put('dnsOut','Sorgu başarısız. İnternet/WebView erişimini kontrol et.')};x.send()}
+function makeHash(){var v=el('hashInput').value;if(!v){put('hashOut','Önce metin gir.');return}if(!window.crypto||!crypto.subtle||!window.TextEncoder){put('hashOut','Bu WebView SHA-256 API desteği sunmuyor.');return}crypto.subtle.digest('SHA-256',new TextEncoder().encode(v)).then(function(buf){var a=new Uint8Array(buf),s='';for(var i=0;i<a.length;i++)s+=('0'+a[i].toString(16)).slice(-2);put('hashOut',s)}).catch(function(){put('hashOut','SHA-256 hesaplanamadı.')})}
+function securityInfo(){put('securityOut','Sayfa protokolü: '+location.protocol+'\nİnternet: '+(navigator.onLine?'Bağlı':'Bağlı değil')+'\nÇerez desteği: '+(navigator.cookieEnabled?'Açık':'Kapalı')+'\nBu temel tarayıcı kontrolüdür.')}
+function deviceInfo(){put('deviceOut','Tarayıcı: '+navigator.userAgent+'\nEkran: '+screen.width+' x '+screen.height+'\nDil: '+(navigator.language||'Bilinmiyor')+'\nPlatform: '+(navigator.platform||'Paylaşılmıyor'))}
+function startFpsMeter(){
+  var frames=0,last=0;
+  function tick(now){
+    frames++;
+    if(!last)last=now;
+    if(now-last>=1000){
+      var fps=Math.round(frames*1000/(now-last));
+      put('fpsValue',String(fps));
+      frames=0;last=now;
+    }
+    if(window.requestAnimationFrame)requestAnimationFrame(tick);
+    else put('fpsValue','N/A');
+  }
+  if(window.requestAnimationFrame)requestAnimationFrame(tick);
+  else put('fpsValue','N/A');
+}
+var introFinished=false;
+function welcomeVoice(manual){
+  if(!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)){
+    put('voiceStatus','Bu WebView konuşma sesini desteklemiyor. Android Java tarafında TextToSpeech gerekir.');
+    return;
+  }
+  try {
+    var synth=window.speechSynthesis;
+    synth.cancel();
+    var msg=new SpeechSynthesisUtterance('Hoş geldiniz. Ejderha Hack hazır.');
+    msg.lang='tr-TR'; msg.rate=0.9; msg.pitch=0.9; msg.volume=1;
+    msg.onstart=function(){put('voiceStatus','Sesli karşılama oynatılıyor…')};
+    msg.onend=function(){put('voiceStatus','Sesli karşılama tamamlandı.')};
+    msg.onerror=function(){put('voiceStatus','Ses oynatılamadı. Android metin okuma motorunu kontrol et.');};
+    var voices=synth.getVoices();
+    var trVoice=null;
+    for(var i=0;i<voices.length;i++){if((voices[i].lang||'').toLowerCase().indexOf('tr')===0){trVoice=voices[i];break;}}
+    if(trVoice) msg.voice=trVoice;
+    synth.speak(msg);
+    if(manual) put('voiceStatus','Ses isteği gönderildi…');
+  } catch(e) { put('voiceStatus','Ses başlatılamadı. Android metin okuma motorunu kontrol et.'); }
+}
+function finishIntro(){
+  if(introFinished) return;
+  introFinished=true;
+  var intro=el('introScreen'); if(intro) intro.classList.add('hide');
+  showWelcomeMessage();
+}
+function showWelcomeMessage(){var box=el('welcomeMessage');if(box)box.classList.add('show')}
+function closeWelcome(){var box=el('welcomeMessage');if(box)box.classList.remove('show')}
+function skipIntro(){finishIntro()}
+function startApp(){put('jsStatus','JavaScript çalışıyor. Tuşlar hazır.');loadProfile();updateClock();startFpsMeter();window.setTimeout(finishIntro,10000);if(window.ejderhaClockTimer)clearInterval(window.ejderhaClockTimer);window.ejderhaClockTimer=setInterval(updateClock,1000);window.addEventListener('online',updateClock);window.addEventListener('offline',updateClock)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',startApp);else startApp();
+
+// Telefon hack düğmesi: yalnızca görsel şaka simülasyonu, gerçek cihaza erişmez.
+var fakeHackTimer=null, fakeHackEnd=0, fakeMatrixFrame=null, fakeMatrixCtx=null, fakeDrops=[];
+function startFakeHack(){
+  var screen=el('fakeHackScreen'); if(!screen)return;
+  screen.classList.add('active'); el('fakeHackClose').style.display='none';
+  el('fakeHackStatus').textContent='Simülasyon başladı. Geri sayım tamamlanınca kapatma düğmesi görünecek.';
+  fakeHackEnd=Date.now()+300000; drawFakeMatrix(); updateFakeCountdown();
+  if(fakeHackTimer)clearInterval(fakeHackTimer); fakeHackTimer=setInterval(updateFakeCountdown,250);
+}
+function updateFakeCountdown(){
+  var left=Math.max(0,fakeHackEnd-Date.now()); var sec=Math.ceil(left/1000);
+  el('fakeCountdown').textContent=String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0');
+  el('fakeProgress').style.width=(left/300000*100)+'%';
+  if(left<=0){clearInterval(fakeHackTimer);fakeHackTimer=null;el('fakeHackStatus').textContent='Simülasyon tamamlandı. Artık kapatabilirsin.';el('fakeHackClose').style.display='inline-block';}
+}
+function drawFakeMatrix(){
+  var canvas=el('fakeMatrix');if(!canvas)return;var ctx=canvas.getContext('2d');if(!ctx)return;
+  var w=canvas.width=window.innerWidth;var h=canvas.height=window.innerHeight;var font=15;var cols=Math.max(1,Math.floor(w/font));fakeDrops=[];for(var i=0;i<cols;i++)fakeDrops[i]=Math.random()*-h/font;
+  if(fakeMatrixFrame)cancelAnimationFrame(fakeMatrixFrame);
+  function frame(){if(!el('fakeHackScreen').classList.contains('active'))return;ctx.fillStyle='rgba(0,0,0,.09)';ctx.fillRect(0,0,w,h);ctx.fillStyle='#35ff70';ctx.font=font+'px monospace';for(var x=0;x<fakeDrops.length;x++){var ch=String.fromCharCode(0x30A0+Math.random()*96);ctx.fillText(ch,x*font,fakeDrops[x]*font);if(fakeDrops[x]*font>h&&Math.random()>.975)fakeDrops[x]=0;fakeDrops[x]++;}fakeMatrixFrame=requestAnimationFrame(frame);}
+  frame();
+}
+function stopFakeHack(){if(fakeHackTimer)clearInterval(fakeHackTimer);fakeHackTimer=null;if(fakeMatrixFrame)cancelAnimationFrame(fakeMatrixFrame);fakeMatrixFrame=null;el('fakeHackScreen').classList.remove('active');}
+window.addEventListener('resize',function(){if(el('fakeHackScreen')&&el('fakeHackScreen').classList.contains('active'))drawFakeMatrix()});
+
+</script>
+</body></html>
